@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "bun build src/index.ts --outdir dist --target bun --sourcemap=external",
+    "generate": "bun src/generate.ts",
     "test": "bun test",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "format": "prettier --write .",
