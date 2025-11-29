@@ -1,0 +1,24 @@
+{
+  "name": "google-fonts-unicode-subsets",
+  "version": "0.1.0",
+  "description": "Generator and dataset of Unicode subsets for Google Fonts, built from official .nam files.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target bun --sourcemap=external",
+    "test": "bun test",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "bun-types": "1.1.30",
+    "prettier": "3.3.3",
+    "typescript": "5.6.3"
+  }
+}
