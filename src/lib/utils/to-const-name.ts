@@ -11,5 +11,8 @@
  * ```
  */
 export function toConstName(subset: string): string {
-  return subset.toUpperCase().replace(/-/g, "_");
+  return subset
+    .toUpperCase()
+    .replace(/-/g, "_")
+    .replace(/_UNIQUE_GLYPHS$/, "");
 }

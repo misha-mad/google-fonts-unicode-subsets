@@ -78,7 +78,7 @@ export const GOOGLE_FONTS_SUBSETS = {
       output += `      ${formattedRanges[i]}${isLast ? "" : ","}\n`;
     }
 
-    output += `    ] as (number | [number, number])[],\n`;
+    output += `    ] as (string | [string, string])[],\n`;
     output += `    name: '${data.name}',\n`;
     output += `  },\n\n`;
   }

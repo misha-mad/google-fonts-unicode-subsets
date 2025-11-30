@@ -17,6 +17,7 @@ if (!esmBuild.success) {
 }
 
 console.log("Building CJS...");
+
 const cjsBuild = await build({
   entrypoints: ["src/index.ts"],
   outdir: "dist",

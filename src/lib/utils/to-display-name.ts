@@ -11,6 +11,7 @@
  */
 export function toDisplayName(subset: string): string {
   return subset
+    .replace(/[_-]unique-glyphs$/, "")
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
