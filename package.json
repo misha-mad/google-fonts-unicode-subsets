@@ -4,9 +4,12 @@
   "description": "Generator and dataset of Unicode subsets for Google Fonts, built from official .nam files.",
   "license": "MIT",
   "type": "module",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "bun build src/index.ts --outdir dist --target bun --sourcemap=external && bun run build:declaration",
+    "build": "bun run clean && bun build.ts && bun run build:declaration",
     "build:declaration": "tsc --project tsconfig.types.json",
+    "clean": "rm -rf dist",
     "generate": "bun src/generate.ts",
     "test": "bun test",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -15,7 +18,14 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "devDependencies": {
