@@ -1,8 +1,10 @@
 import { GITHUB_API_URL } from "../constants";
 
 /**
- * Fetch list of all .nam files from the repository
- * Returns an array of subset names (without .nam extension and _unique-glyphs suffix)
+ * Fetch list of all .nam files from the repository.
+ *
+ * @returns An array of subset names (without .nam extension) sorted alphabetically.
+ * @throws Will throw an error if the GitHub API request fails.
  */
 export async function fetchSubsetList(): Promise<string[]> {
   console.log("📋 Fetching list of subsets from GitHub...");

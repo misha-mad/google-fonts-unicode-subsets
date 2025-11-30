@@ -17,7 +17,7 @@ import {
 async function generateTypeScript() {
   console.log("🚀 Starting subset generation...\n");
 
-  // Fetch dynamic list of subsets from GitHub
+  // Fetch a dynamic list of subsets from GitHub
   const subsets = await fetchSubsetList();
 
   const subsetsData: Record<string, { name: string; ranges: Range[] }> = {};
@@ -92,7 +92,7 @@ export const GOOGLE_FONTS_SUBSETS = {
   }
   output += `];\n`;
 
-  // Write to file
+  // Write to a file
   const outputPath = resolve(process.cwd(), "src/google-fonts-subsets.ts");
   writeFileSync(outputPath, output, "utf-8");
 

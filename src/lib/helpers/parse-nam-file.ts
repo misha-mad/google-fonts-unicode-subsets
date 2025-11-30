@@ -1,6 +1,14 @@
 /**
- * Parse .nam file content and extract codepoints
- * Format: 0xHEX [comment]
+ * Parse .nam file content and extract codepoints.
+ *
+ * @param content - The raw content of the .nam file.
+ * @returns An array of unicode codepoints (as numbers).
+ *
+ * @example
+ * ```ts
+ * const codepoints = parseNamFile("# Latin\n0x0041");
+ * // [65]
+ * ```
  */
 export function parseNamFile(content: string): number[] {
   const codepoints: number[] = [];
