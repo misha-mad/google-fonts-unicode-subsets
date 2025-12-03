@@ -1,5 +1,5 @@
 import subsetsUnicodeNotation from "./google-fonts-subsets.json";
-import { FontSubset } from "./lib/types/font-subsets";
+import { FontSubset } from "./lib";
 
 export type GoogleFontsSubsetsUnicodeNotation = Record<string, FontSubset>;
 

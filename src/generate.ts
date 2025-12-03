@@ -1,14 +1,15 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 import {
+  FontSubset,
+  formatRange,
   getSubsetList,
-  readNamFile,
   parseNamFile,
+  readNamFile,
   squashCodepoints,
   toConstName,
   toDisplayName,
 } from "./lib";
-import { FontSubset } from "./lib/types/font-subsets";
 
 /**
  * Main generation function.
@@ -31,17 +32,7 @@ async function generateJson() {
       const codepoints = parseNamFile(content);
       const ranges = squashCodepoints(codepoints);
       const constName = toConstName(subset);
-
-      // Format ranges for JSON output.
-      const formattedRanges = ranges.map((r) => {
-        if (Array.isArray(r)) {
-          const start = "U+" + r[0].toString(16).toUpperCase().padStart(4, "0");
-          const end = "U+" + r[1].toString(16).toUpperCase().padStart(4, "0");
-          return [start, end] as [string, string];
-        }
-
-        return "U+" + r.toString(16).toUpperCase().padStart(4, "0");
-      });
+      const formattedRanges = ranges.map((range) => formatRange(range));
 
       dataUnicodeNotation[constName] = {
         name: toDisplayName(subset),
