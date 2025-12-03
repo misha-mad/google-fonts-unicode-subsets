@@ -6,4 +6,4 @@ export * from "./utils/to-display-name";
 export * from "./helpers/fetch-subset-list";
 export * from "./helpers/read-nam-file";
 export * from "./helpers/parse-nam-file";
-export * from "./utils/codepoints-to-ranges";
+export * from "./utils/squash-codepoints";
