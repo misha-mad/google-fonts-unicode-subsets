@@ -13,6 +13,6 @@
 export function toConstName(subset: string): string {
   return subset
     .toUpperCase()
-    .replace(/-/g, "_")
+    .replaceAll("-", "_")
     .replace(/_UNIQUE_GLYPHS$/, "");
 }
