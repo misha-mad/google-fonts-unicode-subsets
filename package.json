@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npm run clean && rollup -c",
     "clean": "rm -rf dist",
-    "generate": "tsx src/generate.ts && prettier --write ./src/google-fonts-subsets.json",
+    "generate": "tsx src/generate.ts && prettier --write ./src/google-fonts-subsets*.json",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "format": "prettier --write .",
