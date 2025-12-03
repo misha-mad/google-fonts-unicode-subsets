@@ -2,17 +2,16 @@
  * Convert a kebab-case string to SCREAMING_SNAKE_CASE.
  * Used for generating constant keys.
  *
- * @param subset - The kebab-case string (e.g., 'latin-ext').
+ * @param subset - The kebab-case string (e.g., 'latin-ext_unique-glyphs').
  * @returns The converted string (e.g., 'LATIN_EXT').
  *
  * @example
  * ```ts
- * toConstName("latin-ext"); // "LATIN_EXT"
+ * toConstName("latin-ext_unique-glyphs"); // "LATIN_EXT"
  * ```
  */
-export function toConstName(subset: string): string {
-  return subset
+export const toConstName = (subset: string) =>
+  subset
     .toUpperCase()
     .replaceAll("-", "_")
     .replace(/_UNIQUE_GLYPHS$/, "");
-}
