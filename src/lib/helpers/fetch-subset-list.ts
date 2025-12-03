@@ -6,7 +6,7 @@ import { NAM_FILES_ROOT } from "../constants";
  *
  * @returns An array of subset names (without .nam extension) sorted alphabetically.
  */
-export async function fetchSubsetList(): Promise<string[]> {
+export const fetchSubsetList = async () => {
   console.log("📋 Fetching list of subsets from local submodule...");
 
   try {
@@ -32,4 +32,4 @@ export async function fetchSubsetList(): Promise<string[]> {
   } catch (error) {
     throw new Error(`Failed to read directory: ${error}`);
   }
-}
+};

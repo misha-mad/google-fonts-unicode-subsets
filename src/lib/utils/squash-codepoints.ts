@@ -1,5 +1,3 @@
-import type { Range } from "../types/range";
-
 /**
  * Convert array of codepoints to optimized ranges.
  * Consecutive codepoints are grouped into [start, end] ranges.
@@ -13,11 +11,11 @@ import type { Range } from "../types/range";
  * squashCodepoints([1, 2, 3, 5]); // [[1, 3], 5]
  * ```
  */
-export function squashCodepoints(codepoints: number[]): Range[] {
+export const squashCodepoints = (codepoints: number[]) => {
   if (codepoints.length === 0) return [];
 
   const sorted = [...codepoints].sort((a, b) => a - b);
-  const ranges: Range[] = [];
+  const ranges: Array<number | [number, number]> = [];
   let start = sorted[0];
   let end = sorted[0];
 
@@ -35,4 +33,4 @@ export function squashCodepoints(codepoints: number[]): Range[] {
   // Add the last range
   ranges.push(start === end ? start : [start, end]);
   return ranges;
-}
+};

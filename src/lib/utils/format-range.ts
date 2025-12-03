@@ -12,11 +12,11 @@ import type { Range } from "../types/range";
  * formatRange([0x41, 0x5A]); // "[0x0041, 0x005A]"
  * ```
  */
-export function formatRange(range: Range): string {
+export const formatRange = (range: Range) => {
   if (Array.isArray(range)) {
     const start = `'U+${range[0].toString(16).toUpperCase().padStart(4, "0")}'`;
     const end = `'U+${range[1].toString(16).toUpperCase().padStart(4, "0")}'`;
     return `[${start}, ${end}]`;
   }
   return `'U+${range.toString(16).toUpperCase().padStart(4, "0")}'`;
-}
+};

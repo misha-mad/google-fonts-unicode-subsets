@@ -9,7 +9,7 @@ import { NAM_FILES_ROOT } from "../constants";
  * @returns The content of the .nam file as a string
  * @throws Will throw an error if the file reading fails
  */
-export async function readNamFile(subset: string): Promise<string> {
+export const readNamFile = async (subset: string) => {
   const filePath = resolve(NAM_FILES_ROOT, `${subset}.nam`);
 
   try {
@@ -17,4 +17,4 @@ export async function readNamFile(subset: string): Promise<string> {
   } catch (error) {
     throw new Error(`Failed to read ${subset} from ${filePath}: ${error}`);
   }
-}
+};
