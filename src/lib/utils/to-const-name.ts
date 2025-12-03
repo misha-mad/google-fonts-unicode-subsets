@@ -12,6 +12,6 @@
  */
 export const toConstName = (subset: string) =>
   subset
+    .replace(/_unique-glyphs$/, "")
     .toUpperCase()
-    .replaceAll("-", "_")
-    .replace(/_UNIQUE_GLYPHS$/, "");
+    .replaceAll("-", "_");
