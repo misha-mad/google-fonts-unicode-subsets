@@ -10,10 +10,10 @@ import type { Range } from "../types/range";
  *
  * @example
  * ```ts
- * codepointsToRanges([1, 2, 3, 5]); // [[1, 3], 5]
+ * squashCodepoints([1, 2, 3, 5]); // [[1, 3], 5]
  * ```
  */
-export function codepointsToRanges(codepoints: number[]): Range[] {
+export function squashCodepoints(codepoints: number[]): Range[] {
   if (codepoints.length === 0) return [];
 
   const sorted = [...codepoints].sort((a, b) => a - b);
