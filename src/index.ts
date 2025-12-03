@@ -1,7 +1,6 @@
 import subsetsUnicodeNotation from "./google-fonts-subsets-unicode-notation.json";
 import subsetsHexadecimalNotation from "./google-fonts-subsets-hexadecimal-notation.json";
 import subsetsUnicodeRange from "./google-fonts-subsets-unicode-range.json";
-
 import {
   FontSubsetUnicodeNotation,
   FontSubsetHexadecimalNotation,

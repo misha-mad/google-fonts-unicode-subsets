@@ -8,6 +8,11 @@ import {
   toConstName,
   toDisplayName,
 } from "./lib";
+import {
+  FontSubsetHexadecimalNotation,
+  FontSubsetUnicodeNotation,
+  FontSubsetUnicodeRange,
+} from "./lib/types/font-subsets";
 
 /**
  * Main generation function.
@@ -18,17 +23,12 @@ async function generateJson() {
   // Fetch a dynamic list of subsets from GitHub.
   const subsets = await getSubsetList();
 
-  const dataUnicodeNotation: Record<
-    string,
-    { name: string; subsets: Array<Array<string | [string, string]>> }
-  > = {};
+  const dataUnicodeNotation: Record<string, FontSubsetUnicodeNotation> = {};
 
-  const dataHexadecimalNotation: Record<
-    string,
-    { name: string; subsets: Array<Array<string | [string, string]>> }
-  > = {};
+  const dataHexadecimalNotation: Record<string, FontSubsetHexadecimalNotation> =
+    {};
 
-  const dataUnicodeRange: Record<string, { name: string; css: string }> = {};
+  const dataUnicodeRange: Record<string, FontSubsetUnicodeRange> = {};
 
   let totalCodepoints = 0;
   let totalRanges = 0;
@@ -89,7 +89,7 @@ async function generateJson() {
 
       dataUnicodeRange[constName] = {
         name: toDisplayName(subset),
-        css: cssString,
+        "unicode-range": cssString,
       };
 
       totalCodepoints += codepoints.length;

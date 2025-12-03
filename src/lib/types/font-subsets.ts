@@ -1,14 +1,16 @@
+type Subsets = Array<Array<string | [string, string]>>;
+
 export type FontSubsetUnicodeNotation = {
   name: string;
-  subsets: Array<Array<string | [string, string]>>;
+  subsets: Subsets;
 };
 
 export type FontSubsetHexadecimalNotation = {
   name: string;
-  subsets: Array<Array<string | [string, string]>>;
+  subsets: Subsets;
 };
 
 export type FontSubsetUnicodeRange = {
   name: string;
-  css: string;
+  "unicode-range": string;
 };
