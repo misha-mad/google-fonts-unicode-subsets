@@ -3,13 +3,7 @@ import { parseNamFile } from "../src/lib";
 
 describe("parseNamFile", () => {
   it("should parse hex codepoints and ignore comments", () => {
-    const content = `
-      # Comment
-      0x0041
-      0x0042  # B
-      
-      0x0043
-    `;
+    const content = `# Comment\n0x0041\n0x0042  # B\n\n0x0043\n`;
 
     const codepoints = parseNamFile(content);
 
