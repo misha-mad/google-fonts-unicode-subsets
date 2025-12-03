@@ -3,11 +3,7 @@ import { getSubsetList } from "../src/lib";
 import { NAM_FILES_ROOT } from "../src/lib";
 
 // Mock fs/promises
-vi.mock("fs/promises", () => {
-  return {
-    readdir: vi.fn(),
-  };
-});
+vi.mock("fs/promises", () => ({ readdir: vi.fn() }));
 
 import { readdir } from "fs/promises";
 
