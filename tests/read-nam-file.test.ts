@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { readNamFile } from "../src";
+import { readNamFile } from "../src/lib";
 import { resolve } from "path";
 import { NAM_FILES_ROOT } from "../src/lib";
 

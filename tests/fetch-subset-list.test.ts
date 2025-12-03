@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { fetchSubsetList } from "../src";
+import { fetchSubsetList } from "../src/lib";
 import { NAM_FILES_ROOT } from "../src/lib";
 
 // Mock fs/promises

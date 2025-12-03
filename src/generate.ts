@@ -4,7 +4,7 @@ import {
   fetchSubsetList,
   readNamFile,
   parseNamFile,
-  codepointsToRanges,
+  squashCodepoints,
   toConstName,
   toDisplayName,
 } from "./lib";
@@ -32,7 +32,7 @@ async function generateJson() {
       console.log(`📥 Reading ${subset}...`);
       const content = await readNamFile(subset);
       const codepoints = parseNamFile(content);
-      const ranges = codepointsToRanges(codepoints);
+      const ranges = squashCodepoints(codepoints);
 
       const constName = toConstName(subset);
 
