@@ -2,7 +2,7 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import {
   fetchSubsetList,
-  downloadNamFile,
+  readNamFile,
   parseNamFile,
   codepointsToRanges,
   formatRange,
@@ -27,8 +27,8 @@ async function generateTypeScript() {
   // Download and process each subset
   for (const subset of subsets) {
     try {
-      console.log(`📥 Downloading ${subset}...`);
-      const content = await downloadNamFile(subset);
+      console.log(`📥 Reading ${subset}...`);
+      const content = await readNamFile(subset);
       const codepoints = parseNamFile(content);
       const ranges = codepointsToRanges(codepoints);
 

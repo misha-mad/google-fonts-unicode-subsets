@@ -1,6 +1,6 @@
 export {
   fetchSubsetList,
-  downloadNamFile,
+  readNamFile,
   parseNamFile,
   codepointsToRanges,
   type Range,

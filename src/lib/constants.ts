@@ -1,5 +1,6 @@
-export const NAM_FILES_URL =
-  "https://raw.githubusercontent.com/googlefonts/nam-files/main/Lib/gfsubsets/data";
+import { resolve } from "path";
 
-export const GITHUB_API_URL =
-  "https://api.github.com/repos/googlefonts/nam-files/contents/Lib/gfsubsets/data";
+export const NAM_FILES_ROOT = resolve(
+  process.cwd(),
+  "nam-files/Lib/gfsubsets/data",
+);

@@ -10,5 +10,5 @@
     "allowJs": false
   },
   "include": ["src", "tests"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "nam-files"]
 }

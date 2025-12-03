@@ -1,39 +1,35 @@
-import { GITHUB_API_URL } from "../constants";
+import { readdir } from "fs/promises";
+import { NAM_FILES_ROOT } from "../constants";
 
 /**
- * Fetch list of all .nam files from the repository.
+ * Fetch list of all .nam files from the local submodule.
  *
  * @returns An array of subset names (without .nam extension) sorted alphabetically.
- * @throws Will throw an error if the GitHub API request fails.
  */
 export async function fetchSubsetList(): Promise<string[]> {
-  console.log("📋 Fetching list of subsets from GitHub...");
+  console.log("📋 Fetching list of subsets from local submodule...");
 
-  const response = await fetch(GITHUB_API_URL);
+  try {
+    const files = await readdir(NAM_FILES_ROOT);
+    const subsets: string[] = [];
 
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch directory listing: ${response.statusText}`,
-    );
-  }
+    for (const file of files) {
+      if (file.endsWith(".nam")) {
+        // Remove .nam extension
+        const subsetName = file.replace(/\.nam$/, "");
 
-  const files = (await response.json()) as any[];
-  const subsets: string[] = [];
-
-  for (const file of files) {
-    if (file.type === "file" && file.name.endsWith(".nam")) {
-      // Remove .nam extension
-      let subsetName = file.name.replace(/\.nam$/, "");
-
-      if (!subsets.includes(subsetName)) {
-        subsets.push(subsetName);
+        if (!subsets.includes(subsetName)) {
+          subsets.push(subsetName);
+        }
       }
     }
+
+    // Sort alphabetically for consistent output
+    subsets.sort();
+
+    console.log(`   ✅ Found ${subsets.length} subsets\n`);
+    return subsets;
+  } catch (error) {
+    throw new Error(`Failed to read directory: ${error}`);
   }
-
-  // Sort alphabetically for consistent output
-  subsets.sort();
-
-  console.log(`   ✅ Found ${subsets.length} subsets\n`);
-  return subsets;
 }

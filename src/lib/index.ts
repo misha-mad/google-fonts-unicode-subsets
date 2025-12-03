@@ -4,6 +4,6 @@ export * from "./utils/format-range";
 export * from "./utils/to-const-name";
 export * from "./utils/to-display-name";
 export * from "./helpers/fetch-subset-list";
-export * from "./helpers/download-nam-file";
+export * from "./helpers/read-nam-file";
 export * from "./helpers/parse-nam-file";
 export * from "./utils/codepoints-to-ranges";

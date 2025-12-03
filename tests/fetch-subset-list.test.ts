@@ -1,45 +1,33 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { fetchSubsetList } from "../src";
-import { GITHUB_API_URL } from "../src/lib";
+import { NAM_FILES_ROOT } from "../src/lib";
+
+// Mock fs/promises
+vi.mock("fs/promises", () => {
+  return {
+    readdir: vi.fn(),
+  };
+});
+
+import { readdir } from "fs/promises";
 
 describe("fetchSubsetList", () => {
-  const originalFetch = global.fetch;
+  it("should fetch and parse subset list from local directory", async () => {
+    const mockFiles = ["latin.nam", "cyrillic.nam", "README.md", ".hidden"];
 
-  afterEach(() => {
-    global.fetch = originalFetch;
-  });
-
-  it("should fetch and parse subset list", async () => {
-    const mockResponse = [
-      { name: "latin.nam", type: "file" },
-      { name: "cyrillic.nam", type: "file" },
-      { name: "README.md", type: "file" },
-      { name: "ignored", type: "dir" },
-    ];
-
-    const mockFetch = vi.fn(() =>
-      Promise.resolve(
-        new Response(JSON.stringify(mockResponse), { status: 200 }),
-      ),
-    );
-
-    global.fetch = mockFetch;
+    vi.mocked(readdir).mockResolvedValue(mockFiles as any);
 
     const subsets = await fetchSubsetList();
 
-    expect(mockFetch).toHaveBeenCalledWith(GITHUB_API_URL);
+    expect(readdir).toHaveBeenCalledWith(NAM_FILES_ROOT);
     expect(subsets).toEqual(["cyrillic", "latin"]);
   });
 
-  it("should throw error if fetch fails", async () => {
-    global.fetch = vi.fn(() =>
-      Promise.resolve(
-        new Response("Error", { status: 500, statusText: "Server Error" }),
-      ),
-    );
+  it("should throw error if readdir fails", async () => {
+    vi.mocked(readdir).mockRejectedValue(new Error("EACCES"));
 
     await expect(fetchSubsetList()).rejects.toThrow(
-      "Failed to fetch directory listing: Server Error",
+      "Failed to read directory: Error: EACCES",
     );
   });
 });
