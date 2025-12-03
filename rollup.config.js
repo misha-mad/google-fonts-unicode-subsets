@@ -1,5 +1,6 @@
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
+import json from "@rollup/plugin-json";
 import dts from "rollup-plugin-dts";
 
 export default [
@@ -18,6 +19,7 @@ export default [
       },
     ],
     plugins: [
+      json(),
       typescript({ tsconfig: "./tsconfig.json", exclude: ["tests/**"] }),
       terser(),
     ],

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npm run clean && rollup -c",
     "clean": "rm -rf dist",
-    "generate": "tsx src/generate.ts",
+    "generate": "tsx src/generate.ts && prettier --write ./src/google-fonts-subsets.json",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "format": "prettier --write .",
@@ -28,6 +28,7 @@
     }
   },
   "devDependencies": {
+    "@rollup/plugin-json": "6.1.0",
     "@rollup/plugin-terser": "0.4.4",
     "@rollup/plugin-typescript": "12.3.0",
     "@types/node": "24.10.1",
