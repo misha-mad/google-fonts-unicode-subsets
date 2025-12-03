@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, mock } from "bun:test";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { downloadNamFile } from "../src";
 import { NAM_FILES_URL } from "../src/lib";
 
@@ -12,11 +12,10 @@ describe("downloadNamFile", () => {
   it("should download nam file content successfully", async () => {
     const mockContent = "# Latin\n0x0041";
 
-    const mockFetch = mock(() =>
+    const mockFetch = vi.fn(() =>
       Promise.resolve(new Response(mockContent, { status: 200 })),
     );
 
-    // @ts-expect-error - fetch is mocked
     global.fetch = mockFetch;
 
     const content = await downloadNamFile("latin");
@@ -26,8 +25,7 @@ describe("downloadNamFile", () => {
   });
 
   it("should throw error when download fails", async () => {
-    // @ts-expect-error - fetch is mocked
-    global.fetch = mock(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve(
         new Response("Not Found", { status: 404, statusText: "Not Found" }),
       ),

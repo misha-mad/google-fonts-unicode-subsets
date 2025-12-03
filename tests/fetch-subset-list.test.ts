@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, mock } from "bun:test";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { fetchSubsetList } from "../src";
 import { GITHUB_API_URL } from "../src/lib";
 
@@ -17,13 +17,12 @@ describe("fetchSubsetList", () => {
       { name: "ignored", type: "dir" },
     ];
 
-    const mockFetch = mock(() =>
+    const mockFetch = vi.fn(() =>
       Promise.resolve(
         new Response(JSON.stringify(mockResponse), { status: 200 }),
       ),
     );
 
-    // @ts-expect-error - fetch is mocked
     global.fetch = mockFetch;
 
     const subsets = await fetchSubsetList();
@@ -33,8 +32,7 @@ describe("fetchSubsetList", () => {
   });
 
   it("should throw error if fetch fails", async () => {
-    // @ts-expect-error - fetch is mocked
-    global.fetch = mock(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve(
         new Response("Error", { status: 500, statusText: "Server Error" }),
       ),
