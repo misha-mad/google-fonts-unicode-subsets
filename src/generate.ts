@@ -1,7 +1,7 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 import {
-  fetchSubsetList,
+  getSubsetList,
   readNamFile,
   parseNamFile,
   squashCodepoints,
@@ -16,7 +16,7 @@ async function generateJson() {
   console.log("🚀 Starting subset generation (JSON)...\n");
 
   // Fetch a dynamic list of subsets from GitHub
-  const subsets = await fetchSubsetList();
+  const subsets = await getSubsetList();
 
   const finalData: Record<
     string,
@@ -55,7 +55,7 @@ async function generateJson() {
       totalRanges += ranges.length;
 
       console.log(
-        `   ✅ ${codepoints.length} codepoints, ${ranges.length} ranges`,
+        `   ✅ ${codepoints.length} codepoints, ${ranges.length} ranges`
       );
     } catch (error: any) {
       console.error(`   ❌ Error: ${error.message}`);
@@ -63,7 +63,7 @@ async function generateJson() {
   }
 
   console.log(
-    `\n📊 Total: ${totalCodepoints} codepoints in ${totalRanges} ranges\n`,
+    `\n📊 Total: ${totalCodepoints} codepoints in ${totalRanges} ranges\n`
   );
 
   // Write to a file
