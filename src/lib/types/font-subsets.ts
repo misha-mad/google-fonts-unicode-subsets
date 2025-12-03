@@ -1,4 +1,6 @@
+type Subsets = Array<Array<string | [string, string]>>;
+
 export type FontSubset = {
   name: string;
-  subsets: Array<Array<string | [string, string]>>;
+  subsets: Subsets;
 };

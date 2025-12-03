@@ -23,7 +23,7 @@ describe("getSubsetList", () => {
     vi.mocked(readdir).mockRejectedValue(new Error("EACCES"));
 
     await expect(getSubsetList()).rejects.toThrow(
-      "Failed to read directory: Error: EACCES"
+      "Failed to read directory: Error: EACCES",
     );
   });
 });

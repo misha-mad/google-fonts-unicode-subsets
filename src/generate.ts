@@ -8,6 +8,7 @@ import {
   toConstName,
   toDisplayName,
 } from "./lib";
+import { FontSubset } from "./lib/types/font-subsets";
 
 /**
  * Main generation function.
@@ -18,11 +19,7 @@ async function generateJson() {
   // Fetch a dynamic list of subsets from GitHub.
   const subsets = await getSubsetList();
 
-  const finalData: Record<
-    string,
-    { name: string; subsets: (string | [string, string])[][] }
-  > = {};
-
+  const dataUnicodeNotation: Record<string, FontSubset> = {};
   let totalCodepoints = 0;
   let totalRanges = 0;
 
@@ -33,7 +30,6 @@ async function generateJson() {
       const content = await readNamFile(subset);
       const codepoints = parseNamFile(content);
       const ranges = squashCodepoints(codepoints);
-
       const constName = toConstName(subset);
 
       // Format ranges for JSON output.
@@ -43,19 +39,20 @@ async function generateJson() {
           const end = "U+" + r[1].toString(16).toUpperCase().padStart(4, "0");
           return [start, end] as [string, string];
         }
+
         return "U+" + r.toString(16).toUpperCase().padStart(4, "0");
       });
 
-      finalData[constName] = {
+      dataUnicodeNotation[constName] = {
         name: toDisplayName(subset),
-        subsets: [formattedRanges], // Nested array as requested.
+        subsets: [formattedRanges],
       };
 
       totalCodepoints += codepoints.length;
       totalRanges += ranges.length;
 
       console.log(
-        `   ✅ ${codepoints.length} codepoints, ${ranges.length} ranges`
+        `   ✅ ${codepoints.length} codepoints, ${ranges.length} ranges`,
       );
     } catch (error: any) {
       console.error(`   ❌ Error: ${error.message}`);
@@ -63,15 +60,26 @@ async function generateJson() {
   }
 
   console.log(
-    `\n📊 Total: ${totalCodepoints} codepoints in ${totalRanges} ranges\n`
+    `\n📊 Total: ${totalCodepoints} codepoints in ${totalRanges} ranges\n`,
   );
 
-  // Write to a file.
-  const outputPath = resolve(process.cwd(), "src/google-fonts-subsets.json");
-  writeFileSync(outputPath, JSON.stringify(finalData, null, 2), "utf-8");
+  // Write to files.
+  const pathUnicodeNotation = resolve(
+    process.cwd(),
+    "src/google-fonts-subsets.json",
+  );
 
-  console.log(`✅ File successfully generated: ${outputPath}`);
-  console.log(`📦 Processed ${Object.keys(finalData).length} subsets`);
+  writeFileSync(
+    pathUnicodeNotation,
+    JSON.stringify(dataUnicodeNotation, null, 2),
+    "utf-8",
+  );
+
+  console.log(`✅ File successfully generated: ${pathUnicodeNotation}`);
+
+  console.log(
+    `📦 Processed ${Object.keys(dataUnicodeNotation).length} subsets`,
+  );
 }
 
 // Run the generator.

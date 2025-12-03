@@ -12,7 +12,7 @@ describe("toDisplayName", () => {
 
   it("should handle multiple dashes", () => {
     expect(toDisplayName("long-subset-name_unique-glyphs")).toBe(
-      "Long Subset Name"
+      "Long Subset Name",
     );
   });
 });
