@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseNamFile } from "../src";
+import { parseNamFile } from "../src/lib";
 
 describe("parseNamFile", () => {
   it("should parse hex codepoints and ignore comments", () => {

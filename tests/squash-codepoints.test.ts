@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { squashCodepoints } from "../src";
+import { squashCodepoints } from "../src/lib";
 
 describe("squashCodepoints", () => {
   it("should group consecutive codepoints", () => {
