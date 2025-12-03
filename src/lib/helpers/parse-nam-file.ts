@@ -10,21 +10,7 @@
  * // [65]
  * ```
  */
-export function parseNamFile(content: string): number[] {
-  const codepoints: number[] = [];
-
-  for (const line of content.split("\n")) {
-    const trimmed = line.trim();
-
-    // Skip empty lines and comments
-    if (!trimmed || trimmed.startsWith("#")) continue;
-
-    // Extract hex value (format: 0xHEXVALUE)
-    const match = trimmed.match(/^0x([0-9A-Fa-f]+)/);
-    if (match) {
-      codepoints.push(parseInt(match[1], 16));
-    }
-  }
-
-  return codepoints;
-}
+export const parseNamFile = (content: string) =>
+  (content.match(/(?<=^0x)[0-9A-Fa-f]+/gm) ?? []).map((hexValue) =>
+    parseInt(hexValue, 16)
+  );
