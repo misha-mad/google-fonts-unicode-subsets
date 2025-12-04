@@ -62,7 +62,7 @@ async function generateJson() {
 
   writeFileSync(
     pathUnicodeNotation,
-    JSON.stringify(dataUnicodeNotation, null, 2),
+    JSON.stringify(dataUnicodeNotation),
     "utf-8",
   );
 
