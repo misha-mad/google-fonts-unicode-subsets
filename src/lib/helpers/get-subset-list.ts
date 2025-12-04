@@ -1,5 +1,5 @@
 import {readdir} from 'fs/promises'
-import {NAM_FILES_ROOT} from '../constants'
+import {NAM_FILES_ROOT} from 'src/lib'
 
 /**
  * Fetch list of all .nam files from the local submodule.

@@ -1,6 +1,6 @@
 import {readFile} from 'fs/promises'
 import {resolve} from 'path'
-import {NAM_FILES_ROOT} from '../constants'
+import {NAM_FILES_ROOT} from 'src/lib'
 
 /**
  * Read a .nam file from the local submodule
