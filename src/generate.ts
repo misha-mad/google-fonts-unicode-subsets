@@ -2,7 +2,7 @@ import {readFile} from 'fs/promises'
 import {writeFileSync} from 'fs'
 import {resolve} from 'path'
 import {
-  FontSubset,
+  FontSubsets,
   getSubsetList,
   parseNamFile,
   parseSliceFile,
@@ -21,7 +21,7 @@ async function generateJson() {
   // Fetch a dynamic list of subsets from GitHub.
   const subsets = await getSubsetList()
 
-  const dataUnicodeNotation: Record<string, FontSubset> = {}
+  const dataUnicodeNotation: FontSubsets = {}
   let totalCodepoints = 0
 
   // Download and process each subset.
