@@ -18,6 +18,6 @@
  * // Output: [[32, 33, 34]]
  */
 export const parseSliceFile = (content: string) =>
-  (content.match(/(?<=^subsets \{$\n)[\s\S]+?(?=^}$)/gm) ?? []).map((m) =>
-    (m.match(/(?<=^ {2}codepoints: )\d+/gm) ?? []).map(Number),
+  (content.match(/(?<=^subsets \{$\n).+?(?=^}$)/gms) ?? []).map((m) =>
+    (m.match(/(?<=^  codepoints: )\d+/gm) ?? []).map(Number),
   )
