@@ -1,6 +1,16 @@
+import {readFile} from 'fs/promises'
 import {writeFileSync} from 'fs'
 import {resolve} from 'path'
-import {FontSubsets, getSubsetList, parseNamFile, readNamFile, toConstName, toDisplayName} from './lib'
+import {
+  FontSubsets,
+  getSubsetList,
+  parseNamFile,
+  parseSliceFile,
+  readNamFile,
+  SLICE_MAP,
+  toConstName,
+  toDisplayName,
+} from './lib'
 
 /**
  * Main generation function.
@@ -13,7 +23,6 @@ async function generateJson() {
 
   const dataUnicodeNotation: FontSubsets = {}
   let totalCodepoints = 0
-  let totalRanges = 0
 
   // Download and process each subset.
   for (const subset of subsets) {
@@ -22,26 +31,45 @@ async function generateJson() {
       const content = await readNamFile(subset)
       const codepoints = parseNamFile(content)
       const constName = toConstName(subset)
+      let finalSubsets: number[][] = [codepoints]
 
-      dataUnicodeNotation[constName] = {name: toDisplayName(subset), subsets: [codepoints]}
-      totalCodepoints += codepoints.length
-      totalRanges += codepoints.length
+      if (SLICE_MAP[subset]) {
+        console.log(`   🔪 Processing slice file for ${subset}...`)
 
-      console.log(`   ✅ ${codepoints.length} codepoints, ${codepoints.length} ranges`)
+        try {
+          const slicePath = resolve(process.cwd(), 'nam-files/slices', SLICE_MAP[subset])
+          const sliceContent = await readFile(slicePath, 'utf-8')
+          const slices = parseSliceFile(sliceContent)
+
+          if (slices.length > 0) {
+            // Reverse slices so subsets go from highest to lowest priority.
+            // https://github.com/googlefonts/nam-files/blob/80f8e537a43ff6754810666709740dc18de8a17f/slices/hongkong-chinese_default.txt#L126
+            finalSubsets = slices.reverse()
+            console.log(`   ✅ Applied ${slices.length} slices from ${SLICE_MAP[subset]}`)
+          } else {
+            console.warn(`   ⚠️ Slice file found but no subsets parsed for ${subset}`)
+          }
+        } catch (e: any) {
+          console.error(`   ❌ Failed to load slices for ${subset}: ${e.message}`)
+        }
+      }
+
+      dataUnicodeNotation[constName] = {name: toDisplayName(subset), subsets: finalSubsets}
+      const currentCodepointsCount = finalSubsets.reduce((sum, s) => sum + s.length, 0)
+      totalCodepoints += currentCodepointsCount
+      console.log(`   ✅ ${currentCodepointsCount} codepoints, ${finalSubsets.length} subsets`)
     } catch (error: any) {
       console.error(`   ❌ Error: ${error.message}`)
     }
   }
 
-  console.log(`\n📊 Total: ${totalCodepoints} codepoints in ${totalRanges} ranges\n`)
+  console.log(`\n📊 Total: ${totalCodepoints} codepoints\n`)
 
   // Write to files.
   const pathUnicodeNotation = resolve(process.cwd(), 'src/google-fonts-subsets.json')
 
   writeFileSync(pathUnicodeNotation, JSON.stringify(dataUnicodeNotation), 'utf-8')
-
   console.log(`✅ File successfully generated: ${pathUnicodeNotation}`)
-
   console.log(`📦 Processed ${Object.keys(dataUnicodeNotation).length} subsets`)
 }
 
