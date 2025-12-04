@@ -1,15 +1,6 @@
 import {writeFileSync} from 'fs'
 import {resolve} from 'path'
-import {
-  FontSubset,
-  formatRange,
-  getSubsetList,
-  parseNamFile,
-  readNamFile,
-  squashCodepoints,
-  toConstName,
-  toDisplayName,
-} from './lib'
+import {FontSubset, getSubsetList, parseNamFile, readNamFile, toConstName, toDisplayName} from './lib'
 
 /**
  * Main generation function.
@@ -30,15 +21,13 @@ async function generateJson() {
       console.log(`📥 Reading ${subset}...`)
       const content = await readNamFile(subset)
       const codepoints = parseNamFile(content)
-      const ranges = squashCodepoints(codepoints)
       const constName = toConstName(subset)
-      const formattedRanges = ranges.map((range) => formatRange(range))
 
-      dataUnicodeNotation[constName] = {name: toDisplayName(subset), subsets: [formattedRanges]}
+      dataUnicodeNotation[constName] = {name: toDisplayName(subset), subsets: [codepoints]}
       totalCodepoints += codepoints.length
-      totalRanges += ranges.length
+      totalRanges += codepoints.length
 
-      console.log(`   ✅ ${codepoints.length} codepoints, ${ranges.length} ranges`)
+      console.log(`   ✅ ${codepoints.length} codepoints, ${codepoints.length} ranges`)
     } catch (error: any) {
       console.error(`   ❌ Error: ${error.message}`)
     }

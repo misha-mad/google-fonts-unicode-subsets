@@ -1,2 +1,2 @@
-type Subsets = Array<Array<string | [string, string]>>
+type Subsets = Array<Array<number>>
 export type FontSubset = {name: string; subsets: Subsets}
