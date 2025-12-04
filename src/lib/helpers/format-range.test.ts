@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {formatRange} from '../src/lib'
+import {formatRange} from './format-range'
 
 describe('formatRange', () => {
   it('should format a single number range', () => {

@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {toConstName} from '../src/lib'
+import {toConstName} from './to-const-name'
 
 describe('toConstName', () => {
   it('should convert kebab-case to SCREAMING_SNAKE_CASE', () => {

@@ -1,7 +1,7 @@
 /**
  * Format a numeric codepoint into a string representation for TypeScript output.
  *
- * @param range - A codepoint number.
+ * @param codepoint - A codepoint number.
  * @returns A formatted string (e.g., "U+0041").
  *
  * @example

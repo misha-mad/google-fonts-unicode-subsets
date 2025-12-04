@@ -1,7 +1,7 @@
 import {describe, expect, it, vi} from 'vitest'
-import {readNamFile} from '../src/lib'
+import {readNamFile} from './read-nam-file'
 import {resolve} from 'path'
-import {NAM_FILES_ROOT} from '../src/lib'
+import {NAM_FILES_ROOT} from '../constants'
 
 // Mock fs/promises
 vi.mock('fs/promises', () => {

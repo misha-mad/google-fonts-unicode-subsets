@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {toDisplayName} from '../src/lib'
+import {toDisplayName} from './to-display-name'
 
 describe('toDisplayName', () => {
   it('should convert kebab-case to Title Case', () => {

@@ -1,6 +1,6 @@
 import {describe, expect, it, vi} from 'vitest'
-import {getSubsetList} from '../src/lib'
-import {NAM_FILES_ROOT} from '../src/lib'
+import {getSubsetList} from './get-subset-list'
+import {NAM_FILES_ROOT} from '../constants'
 
 // Mock fs/promises
 vi.mock('fs/promises', () => ({readdir: vi.fn()}))
