@@ -34,11 +34,7 @@ async function generateJson() {
       const constName = toConstName(subset)
       const formattedRanges = ranges.map((range) => formatRange(range))
 
-      dataUnicodeNotation[constName] = {
-        name: toDisplayName(subset),
-        subsets: [formattedRanges],
-      }
-
+      dataUnicodeNotation[constName] = {name: toDisplayName(subset), subsets: [formattedRanges]}
       totalCodepoints += codepoints.length
       totalRanges += ranges.length
 
