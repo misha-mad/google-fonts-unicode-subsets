@@ -1,6 +1,6 @@
 import {writeFileSync} from 'fs'
 import {resolve} from 'path'
-import {FontSubset, getSubsetList, parseNamFile, readNamFile, toConstName, toDisplayName} from './lib'
+import {FontSubsets, getSubsetList, parseNamFile, readNamFile, toConstName, toDisplayName} from './lib'
 
 /**
  * Main generation function.
@@ -11,7 +11,7 @@ async function generateJson() {
   // Fetch a dynamic list of subsets from GitHub.
   const subsets = await getSubsetList()
 
-  const dataUnicodeNotation: Record<string, FontSubset> = {}
+  const dataUnicodeNotation: FontSubsets = {}
   let totalCodepoints = 0
   let totalRanges = 0
 

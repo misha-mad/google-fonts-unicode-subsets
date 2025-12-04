@@ -1,6 +1,6 @@
 import subsetsUnicodeNotation from './google-fonts-subsets.json'
-import {FontSubset} from './lib'
+import {FontSubsets} from './lib'
 
-export type GoogleFontsSubsetsUnicodeNotation = Record<string, FontSubset>
+export type GoogleFontsSubsets = FontSubsets
 
-export const GOOGLE_FONTS_SUBSETS = subsetsUnicodeNotation as GoogleFontsSubsetsUnicodeNotation
+export const GOOGLE_FONTS_SUBSETS = subsetsUnicodeNotation as GoogleFontsSubsets

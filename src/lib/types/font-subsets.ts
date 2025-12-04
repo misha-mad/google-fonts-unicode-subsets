@@ -1,2 +1,1 @@
-type Subsets = Array<Array<number>>
-export type FontSubset = {name: string; subsets: Subsets}
+export type FontSubsets = Record<string, {name: string; subsets: Array<Array<number>>}>
