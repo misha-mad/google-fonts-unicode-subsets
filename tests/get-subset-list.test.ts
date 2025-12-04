@@ -1,29 +1,27 @@
-import { describe, expect, it, vi } from "vitest";
-import { getSubsetList } from "../src/lib";
-import { NAM_FILES_ROOT } from "../src/lib";
+import {describe, expect, it, vi} from 'vitest'
+import {getSubsetList} from '../src/lib'
+import {NAM_FILES_ROOT} from '../src/lib'
 
 // Mock fs/promises
-vi.mock("fs/promises", () => ({ readdir: vi.fn() }));
+vi.mock('fs/promises', () => ({readdir: vi.fn()}))
 
-import { readdir } from "fs/promises";
+import {readdir} from 'fs/promises'
 
-describe("getSubsetList", () => {
-  it("should fetch and parse subset list from local directory", async () => {
-    const mockFiles = ["latin.nam", "cyrillic.nam", "README.md", ".hidden"];
+describe('getSubsetList', () => {
+  it('should fetch and parse subset list from local directory', async () => {
+    const mockFiles = ['latin.nam', 'cyrillic.nam', 'README.md', '.hidden']
 
-    vi.mocked(readdir).mockResolvedValue(mockFiles as any);
+    vi.mocked(readdir).mockResolvedValue(mockFiles as any)
 
-    const subsets = await getSubsetList();
+    const subsets = await getSubsetList()
 
-    expect(readdir).toHaveBeenCalledWith(NAM_FILES_ROOT);
-    expect(subsets).toEqual(["cyrillic", "latin"]);
-  });
+    expect(readdir).toHaveBeenCalledWith(NAM_FILES_ROOT)
+    expect(subsets).toEqual(['cyrillic', 'latin'])
+  })
 
-  it("should throw error if readdir fails", async () => {
-    vi.mocked(readdir).mockRejectedValue(new Error("EACCES"));
+  it('should throw error if readdir fails', async () => {
+    vi.mocked(readdir).mockRejectedValue(new Error('EACCES'))
 
-    await expect(getSubsetList()).rejects.toThrow(
-      "Failed to read directory: Error: EACCES",
-    );
-  });
-});
+    await expect(getSubsetList()).rejects.toThrow('Failed to read directory: Error: EACCES')
+  })
+})

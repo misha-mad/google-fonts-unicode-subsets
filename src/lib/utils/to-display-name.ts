@@ -11,6 +11,6 @@
  */
 export const toDisplayName = (subset: string) =>
   subset
-    .replace(/_unique-glyphs$/, "")
-    .replaceAll("-", " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+    .replace(/_unique-glyphs$/, '')
+    .replaceAll('-', ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())

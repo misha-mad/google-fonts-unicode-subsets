@@ -1,6 +1,6 @@
-import { readFile } from "fs/promises";
-import { resolve } from "path";
-import { NAM_FILES_ROOT } from "../constants";
+import {readFile} from 'fs/promises'
+import {resolve} from 'path'
+import {NAM_FILES_ROOT} from '../constants'
 
 /**
  * Read a .nam file from the local submodule
@@ -10,11 +10,11 @@ import { NAM_FILES_ROOT } from "../constants";
  * @throws Will throw an error if the file reading fails
  */
 export const readNamFile = async (subset: string) => {
-  const filePath = resolve(NAM_FILES_ROOT, `${subset}.nam`);
+  const filePath = resolve(NAM_FILES_ROOT, `${subset}.nam`)
 
   try {
-    return await readFile(filePath, "utf-8");
+    return await readFile(filePath, 'utf-8')
   } catch (error) {
-    throw new Error(`Failed to read ${subset} from ${filePath}: ${error}`);
+    throw new Error(`Failed to read ${subset} from ${filePath}: ${error}`)
   }
-};
+}

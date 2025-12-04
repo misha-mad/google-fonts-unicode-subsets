@@ -11,6 +11,4 @@
  * ```
  */
 export const parseNamFile = (content: string) =>
-  (content.match(/(?<=^0x)\p{Hex_Digit}+/gmu) ?? []).map((hexValue) =>
-    parseInt(hexValue, 16),
-  );
+  (content.match(/(?<=^0x)\p{Hex_Digit}+/gmu) ?? []).map((hexValue) => parseInt(hexValue, 16))

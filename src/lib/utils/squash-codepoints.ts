@@ -12,25 +12,25 @@
  * ```
  */
 export const squashCodepoints = (codepoints: number[]) => {
-  if (codepoints.length === 0) return [];
+  if (codepoints.length === 0) return []
 
-  const sorted = [...codepoints].sort((a, b) => a - b);
-  const ranges: Array<number | [number, number]> = [];
-  let start = sorted[0];
-  let end = sorted[0];
+  const sorted = [...codepoints].sort((a, b) => a - b)
+  const ranges: Array<number | [number, number]> = []
+  let start = sorted[0]
+  let end = sorted[0]
 
   for (let i = 1; i < sorted.length; i++) {
     if (sorted[i] === end + 1) {
       // Continue the range.
-      end = sorted[i];
+      end = sorted[i]
     } else {
       // Save the current range and start a new one.
-      ranges.push(start === end ? start : [start, end]);
-      start = end = sorted[i];
+      ranges.push(start === end ? start : [start, end])
+      start = end = sorted[i]
     }
   }
 
   // Add the last range.
-  ranges.push(start === end ? start : [start, end]);
-  return ranges;
-};
+  ranges.push(start === end ? start : [start, end])
+  return ranges
+}

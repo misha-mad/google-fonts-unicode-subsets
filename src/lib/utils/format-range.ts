@@ -9,8 +9,7 @@
  * formatCodepoint(0x41); // "U+0041"
  * ```
  */
-const formatCodepoint = (codepoint: number) =>
-  `U+${codepoint.toString(16).toUpperCase().padStart(4, "0")}`;
+const formatCodepoint = (codepoint: number) => `U+${codepoint.toString(16).toUpperCase().padStart(4, '0')}`
 
 /**
  * Format a numeric range or single codepoint into a string representation for TypeScript output.
@@ -26,8 +25,5 @@ const formatCodepoint = (codepoint: number) =>
  */
 export const formatRange = (rangeOrCodepoint: number | [number, number]) =>
   Array.isArray(rangeOrCodepoint)
-    ? ([
-        formatCodepoint(rangeOrCodepoint[0]),
-        formatCodepoint(rangeOrCodepoint[1]),
-      ] as [string, string])
-    : formatCodepoint(rangeOrCodepoint);
+    ? ([formatCodepoint(rangeOrCodepoint[0]), formatCodepoint(rangeOrCodepoint[1])] as [string, string])
+    : formatCodepoint(rangeOrCodepoint)
