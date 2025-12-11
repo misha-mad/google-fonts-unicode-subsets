@@ -1,4 +1,4 @@
-import {readdir} from 'fs/promises'
+import {readdirSync} from 'node:fs'
 import {NAM_FILES_ROOT} from 'src/lib'
 
 /**
@@ -6,11 +6,11 @@ import {NAM_FILES_ROOT} from 'src/lib'
  *
  * @returns An array of subset names (without .nam extension) sorted alphabetically.
  */
-export const getSubsetList = async () => {
+export const getSubsetList = () => {
   console.log('📋 Fetching list of subsets from local submodule...')
 
   try {
-    const subsets = (await readdir(NAM_FILES_ROOT))
+    const subsets = readdirSync(NAM_FILES_ROOT)
       .filter((file) => file.endsWith('.nam'))
       .map((file) => file.replace(/\.nam$/, ''))
       .sort()

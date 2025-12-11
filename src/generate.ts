@@ -11,9 +11,9 @@ import {
   toDisplayName,
 } from './lib'
 
-async function generateJson() {
+try {
   console.log('🚀 Starting subset generation (JSON)...\n')
-  const subsets = await getSubsetList()
+  const subsets = getSubsetList()
 
   // Sort sets according to POPULARITY_ORDER.
   subsets.sort(
@@ -30,7 +30,7 @@ async function generateJson() {
   for (const subset of subsets) {
     try {
       console.log(`📥 Reading ${subset}...`)
-      const content = await readNamFile(subset)
+      const content = readNamFile(subset)
       const codepoints = parseNamFile(content)
       const constName = toConstName(subset)
       let finalSubsets: number[][] = [codepoints]
@@ -48,9 +48,7 @@ async function generateJson() {
   console.log(`📊 Total: ${totalCodepoints} codepoints`)
   console.log(`✅ File successfully generated: ${pathUnicodeNotation}`)
   console.log(`📦 Processed ${Object.keys(dataUnicodeNotation).length} subsets`)
-}
-
-generateJson().catch((error) => {
+} catch (error) {
   console.error('❌ Generation failed:', error)
   process.exit(1)
-})
+}

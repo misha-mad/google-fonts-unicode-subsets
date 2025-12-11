@@ -1,31 +1,24 @@
 import {describe, expect, it, vi} from 'vitest'
 import {readNamFile} from './read-nam-file'
-import {resolve} from 'path'
+import {resolve} from 'node:path'
 import {NAM_FILES_ROOT} from '../constants'
-
-// Mock fs/promises
-vi.mock('fs/promises', () => {
-  return {
-    readFile: vi.fn(),
-  }
-})
-
-import {readFile} from 'fs/promises'
+import {readFileSync} from 'node:fs'
+vi.mock('node:fs', () => ({readFileSync: vi.fn()}))
 
 describe('readNamFile', () => {
-  it('should read nam file content successfully', async () => {
+  it('should read nam file content successfully', () => {
     const mockContent = '# Latin\n0x0041'
-    vi.mocked(readFile).mockResolvedValue(mockContent)
-
-    const content = await readNamFile('latin')
-
-    expect(readFile).toHaveBeenCalledWith(resolve(NAM_FILES_ROOT, 'latin.nam'), 'utf-8')
+    vi.mocked(readFileSync).mockReturnValue(mockContent)
+    const content = readNamFile('latin')
+    expect(readFileSync).toHaveBeenCalledWith(resolve(NAM_FILES_ROOT, 'latin.nam'), 'utf-8')
     expect(content).toBe(mockContent)
   })
 
-  it('should throw error when read fails', async () => {
-    vi.mocked(readFile).mockRejectedValue(new Error('ENOENT'))
+  it('should throw error when read fails', () => {
+    vi.mocked(readFileSync).mockImplementation(() => {
+      throw new Error('Failed to read unknown')
+    })
 
-    await expect(readNamFile('unknown')).rejects.toThrow('Failed to read unknown')
+    expect(() => readNamFile('unknown')).toThrow('Failed to read unknown')
   })
 })
