@@ -1,7 +1,6 @@
 export * from './constants'
 export * from './helpers/get-subset-list'
 export * from './helpers/parse-nam-file'
-export * from './helpers/parse-slice-file'
 export * from './helpers/read-nam-file'
 export * from './helpers/to-const-name'
 export * from './helpers/to-display-name'

@@ -1,27 +1,23 @@
 import {describe, expect, it, vi} from 'vitest'
 import {getSubsetList} from './get-subset-list'
 import {NAM_FILES_ROOT} from '../constants'
-
-// Mock fs/promises
-vi.mock('fs/promises', () => ({readdir: vi.fn()}))
-
-import {readdir} from 'fs/promises'
+import {readdirSync} from 'node:fs'
+vi.mock('node:fs', () => ({readdirSync: vi.fn()}))
 
 describe('getSubsetList', () => {
-  it('should fetch and parse subset list from local directory', async () => {
+  it('should fetch and parse subset list from local directory', () => {
     const mockFiles = ['latin.nam', 'cyrillic.nam', 'README.md', '.hidden']
-
-    vi.mocked(readdir).mockResolvedValue(mockFiles as any)
-
-    const subsets = await getSubsetList()
-
-    expect(readdir).toHaveBeenCalledWith(NAM_FILES_ROOT)
+    vi.mocked(readdirSync).mockReturnValue(mockFiles as any)
+    const subsets = getSubsetList()
+    expect(readdirSync).toHaveBeenCalledWith(NAM_FILES_ROOT)
     expect(subsets).toEqual(['cyrillic', 'latin'])
   })
 
-  it('should throw error if readdir fails', async () => {
-    vi.mocked(readdir).mockRejectedValue(new Error('EACCES'))
+  it('should throw error if read fails', () => {
+    vi.mocked(readdirSync).mockImplementation(() => {
+      throw new Error('Failed to read')
+    })
 
-    await expect(getSubsetList()).rejects.toThrow('Failed to read directory: Error: EACCES')
+    expect(() => getSubsetList()).toThrow('Failed to read')
   })
 })

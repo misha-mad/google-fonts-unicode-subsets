@@ -1,52 +1,54 @@
 import {writeFileSync} from 'fs'
 import {resolve} from 'path'
-import {FontSubsets, getSubsetList, parseNamFile, readNamFile, toConstName, toDisplayName} from './lib'
 
-/**
- * Main generation function.
- */
-async function generateJson() {
+import {
+  FontSubsets,
+  getSubsetList,
+  parseNamFile,
+  POPULARITY_ORDER,
+  readNamFile,
+  toConstName,
+  toDisplayName,
+} from './lib'
+
+try {
   console.log('🚀 Starting subset generation (JSON)...\n')
+  const subsets = getSubsetList()
 
-  // Fetch a dynamic list of subsets from GitHub.
-  const subsets = await getSubsetList()
+  // Sort sets according to POPULARITY_ORDER.
+  subsets.sort(
+    ((orderMap) => (a, b) => {
+      const indexA = orderMap[a] ?? Infinity
+      const indexB = orderMap[b] ?? Infinity
+      return indexA === indexB ? a.localeCompare(b) : indexA - indexB
+    })(Object.fromEntries(POPULARITY_ORDER.map((name, i) => [name, i]))),
+  )
 
   const dataUnicodeNotation: FontSubsets = {}
   let totalCodepoints = 0
-  let totalRanges = 0
 
-  // Download and process each subset.
   for (const subset of subsets) {
     try {
       console.log(`📥 Reading ${subset}...`)
-      const content = await readNamFile(subset)
+      const content = readNamFile(subset)
       const codepoints = parseNamFile(content)
       const constName = toConstName(subset)
-
-      dataUnicodeNotation[constName] = {name: toDisplayName(subset), subsets: [codepoints]}
-      totalCodepoints += codepoints.length
-      totalRanges += codepoints.length
-
-      console.log(`   ✅ ${codepoints.length} codepoints, ${codepoints.length} ranges`)
+      let finalSubsets: number[][] = [codepoints]
+      dataUnicodeNotation[constName] = {name: toDisplayName(subset), subsets: finalSubsets}
+      const currentCodepointsCount = finalSubsets.reduce((sum, s) => sum + s.length, 0)
+      totalCodepoints += currentCodepointsCount
+      console.log(`   ✅ ${currentCodepointsCount} codepoints, ${finalSubsets.length} subsets`)
     } catch (error: any) {
       console.error(`   ❌ Error: ${error.message}`)
     }
   }
 
-  console.log(`\n📊 Total: ${totalCodepoints} codepoints in ${totalRanges} ranges\n`)
-
-  // Write to files.
   const pathUnicodeNotation = resolve(process.cwd(), 'src/google-fonts-subsets.json')
-
   writeFileSync(pathUnicodeNotation, JSON.stringify(dataUnicodeNotation), 'utf-8')
-
+  console.log(`📊 Total: ${totalCodepoints} codepoints`)
   console.log(`✅ File successfully generated: ${pathUnicodeNotation}`)
-
   console.log(`📦 Processed ${Object.keys(dataUnicodeNotation).length} subsets`)
-}
-
-// Run the generator.
-generateJson().catch((error) => {
+} catch (error) {
   console.error('❌ Generation failed:', error)
   process.exit(1)
-})
+}
